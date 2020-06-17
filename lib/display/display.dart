@@ -12,6 +12,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Widget> patients = <Widget>[];
+  List<PatientInformation> patInfo = <PatientInformation>[];
   final patientController = TextEditingController();
 
   @override
@@ -20,8 +21,11 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
+  Future<void> _randomTask() async {}
+
   @override
   Widget build(BuildContext context) {
+    _randomTask();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -33,8 +37,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   patientController.text != '') {
                 var patient = await getPatient(patientController.text);
                 setState(() {
-                  patients.add(
-                      patientRow(patient, MediaQuery.of(context).size.width));
+                  if (patInfo.indexWhere((patientInfo) =>
+                          patientInfo.patient.id == patient.id) ==
+                      -1) {
+                    patInfo.add(PatientInformation(
+                        patient: patient,
+                        screenSize: MediaQuery.of(context).size.width));
+                  }
+                  patients = <Widget>[];
+                  patInfo
+                      .forEach((patient) => patients.add(patient.patientRow()));
                 });
                 patientController.text = '';
               }
