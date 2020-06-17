@@ -1,0 +1,1 @@
+ build/web/icons/Icon-512.png build/web/icons/Icon-192.png build/web/favicon.png build/web/index.html build/web/manifest.json:  /home/grey/dev/dashboard/web/icons/Icon-512.png /home/grey/dev/dashboard/web/icons/Icon-192.png /home/grey/dev/dashboard/web/favicon.png /home/grey/dev/dashboard/web/index.html /home/grey/dev/dashboard/web/manifest.json
