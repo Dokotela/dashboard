@@ -1,10 +1,6 @@
-import 'dart:convert';
-
 import 'package:dashboard/charts.dart';
+import 'package:fhir/fhir_r4.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-
-import 'package:fhir/fhir_r4.dart' as r4;
 
 import 'server_call.dart';
 
@@ -54,16 +50,14 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(
             icon: Icon(Icons.add, color: Colors.white, size: 36.0),
             onPressed: () async {
-              if (patientController.text != null) {
-                var newId = '1173257';
-                var patient = await FhirService.getPatient(newId);
-                var newName =
-                    '${patient.name[0].family}, ${patient.name[0].given}';
-
+              if (patientController.text != null &&
+                  patientController.text != '') {
+                var patient = await getPatient(patientController.text);
                 setState(() {
                   patients.add(
-                      patientRow(newName, MediaQuery.of(context).size.width));
+                      patientRow(patient, MediaQuery.of(context).size.width));
                 });
+                patientController.text = '';
               }
             },
           ),
@@ -99,10 +93,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-Row patientRow(String name, double screenSize) {
+Row patientRow(Patient patient, double screenSize) {
   return Row(
     children: [
-      patientName(name, screenSize),
+      patientName(patient, screenSize),
       heartRate(screenSize, 56),
       saturation(screenSize, 96),
       trend(screenSize),
@@ -110,7 +104,11 @@ Row patientRow(String name, double screenSize) {
   );
 }
 
-Container patientName(String name, double screenSize) {
+Container patientName(Patient patient, double screenSize) {
+  var name = '${patient.name[0].family}, '
+      '${patient.name[0].given.join(" ")}';
+  var id = patient.id;
+  var dob = patient?.birthDate?.toString() ?? 'unknown';
   return Container(
     width: screenSize * .15,
     child: Column(
@@ -128,12 +126,12 @@ Container patientName(String name, double screenSize) {
                 text: 'ID: ',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              TextSpan(text: '1234\n'),
+              TextSpan(text: '$id\n'),
               TextSpan(
                 text: 'DOB: ',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              TextSpan(text: '01/01/1974\n'),
+              TextSpan(text: '$dob\n'),
             ],
           ),
         ),

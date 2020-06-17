@@ -13,9 +13,8 @@ class ScatterChartSample1 extends StatefulWidget {
 
 class _ScatterChartSample1State extends State {
   double screenSize;
-  final maxX = 50.0;
-  final maxY = 50.0;
-  final radius = 8.0;
+  final maxX = 6.0;
+  final maxY = 150.0;
 
   Color blue1 = const Color(0xFF0D47A1);
   Color blue2 = const Color(0xFF42A5F5).withOpacity(0.8);
@@ -45,7 +44,7 @@ class _ScatterChartSample1State extends State {
                 scatterSpots: randomData(),
                 minX: 0,
                 maxX: maxX,
-                minY: 0,
+                minY: 40,
                 maxY: maxY,
                 borderData: FlBorderData(
                   show: false,
@@ -54,13 +53,23 @@ class _ScatterChartSample1State extends State {
                   show: true,
                 ),
                 titlesData: FlTitlesData(
-                  show: false,
+                  show: true,
+                  leftTitles: SideTitles(
+                    showTitles: true,
+                    getTitles: (value) {
+                      switch (value.toInt() % 10) {
+                        case 0:
+                          return value.toString();
+                        default:
+                          return '';
+                      }
+                    },
+                  ),
                 ),
                 scatterTouchData: ScatterTouchData(
                   enabled: false,
                 ),
               ),
-              swapAnimationDuration: const Duration(milliseconds: 600),
             ),
           ),
         ),
