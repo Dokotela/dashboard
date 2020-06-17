@@ -13,7 +13,8 @@ class ScatterChartSample1 extends StatefulWidget {
 
 class _ScatterChartSample1State extends State {
   double screenSize;
-  final maxX = 6.0;
+  double end = DateTime.now().add(Duration(hours: 1)).hour.toDouble();
+  double start = DateTime.now().add(Duration(hours: -5)).hour.toDouble();
   final maxY = 150.0;
 
   Color blue1 = const Color(0xFF0D47A1);
@@ -41,9 +42,9 @@ class _ScatterChartSample1State extends State {
             elevation: 6,
             child: ScatterChart(
               ScatterChartData(
-                scatterSpots: randomData(),
-                minX: 0,
-                maxX: maxX,
+                scatterSpots: randomData(start),
+                minX: start,
+                maxX: end,
                 minY: 40,
                 maxY: maxY,
                 borderData: FlBorderData(
@@ -77,22 +78,30 @@ class _ScatterChartSample1State extends State {
     );
   }
 
-  List<ScatterSpot> randomData() {
-    const blue1Count = 21;
-    const blue2Count = 57;
-    return List.generate(blue1Count + blue2Count, (i) {
+  List<ScatterSpot> randomData(double start) {
+    var hr = 90.0;
+    var sat = 98.0;
+    var curVal = hr;
+    var time = start;
+    return List.generate(2000, (i) {
       Color color;
-      if (i < blue1Count) {
+      var posNeg = Random().nextDouble() > .5 ? -1 : 1;
+      if (i % 2 == 0) {
         color = blue1;
+        curVal = hr;
+        hr = Random().nextDouble() * posNeg + hr;
       } else {
         color = blue2;
+        curVal = sat;
+        sat = Random().nextDouble() * posNeg + sat;
       }
+      time += .003;
 
       return ScatterSpot(
-        (Random().nextDouble() * (maxX - 8)) + 4,
-        (Random().nextDouble() * (maxY - 8)) + 4,
+        (time),
+        (curVal),
         color: color,
-        radius: 2,
+        radius: 1.5,
       );
     });
   }
