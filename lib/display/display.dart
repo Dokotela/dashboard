@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dashboard/http/server_call.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +23,23 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  Future<void> _randomTask() async {}
+  Future _randomTask() async {
+    while (true) {
+      await Future.delayed(const Duration(seconds: 5));
+      setState(() {
+        patInfo[0].patient = patInfo[0].patient.copyWith(name: [
+          patInfo[0].patient.name[0].copyWith(
+              family: patInfo[0]
+                  .patient
+                  .name[0]
+                  .family
+                  .substring(0, patInfo[0].patient.name[0].family.length - 2))
+        ]);
+        patients = <Widget>[];
+        patInfo.forEach((patient) => patients.add(patient.patientRow()));
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -12,7 +12,6 @@ Future<Patient> getPatient(String name) async {
   var response = await get('$server/Patient?family=$name', headers: headers);
   var patient;
   if (response.statusCode == 200) {
-    print('here');
     var patBundle = Bundle.fromJson(json.decode(response.body));
     patient = Patient.fromJson(patBundle.entry[0].resource.toJson());
   } else {
