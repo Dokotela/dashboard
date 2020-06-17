@@ -1,20 +1,35 @@
-import 'package:fhir/fhir_r4.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
-import 'charts.dart';
+import 'package:fhir/fhir_r4.dart';
+
+import 'export.dart';
 
 class PatientInformation {
   Patient patient;
   double screenSize;
-  List<Observation> hr;
-  List<Observation> sat;
+  FhirDateTime last;
+  List<Tuple2<double, FhirDateTime>> sat;
+  List<Tuple2<double, FhirDateTime>> hr;
 
   PatientInformation({
     this.patient,
     this.screenSize,
-    this.hr,
+    this.last,
     this.sat,
+    this.hr,
   });
+
+  void getVitals({FhirDateTime last}) async {
+    var now = FhirDateTime(DateTime.now());
+    var result = await getPatientVitals(
+      patient.id.toString(),
+      last ?? this.last,
+    );
+    this.last = now;
+    result.value1.forEach((satValue) => sat.add(satValue));
+    result.value2.forEach((hrValue) => hr.add(hrValue));
+  }
 
   Row patientRow() => Row(
         children: [
@@ -97,6 +112,6 @@ class PatientInformation {
       );
 
   Container getTrend() {
-    return Container(child: ScatterChartSample1(screenSize));
+    return Container(child: ScatterChartSample1(screenSize, sat, hr));
   }
 }
