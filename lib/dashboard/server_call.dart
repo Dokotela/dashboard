@@ -8,7 +8,7 @@ import 'package:fhir/fhir_r4.dart';
 Future<Patient> getPatient(String name) async {
   var server = 'http://52.188.54.157:8080/fhir/';
   var headers = {
-    'Content-type': 'application/json',
+    'Content-type': 'application/fhir+json',
     'Authorization': 'Basic Y2xpZW50OnNlY3JldA=='
   };
   var response = await get('$server/Patient?family=$name', headers: headers);
@@ -26,13 +26,12 @@ Future<
     Tuple2<List<Tuple2<double, FhirDateTime>>,
         List<Tuple2<double, FhirDateTime>>>> getPatientVitals(
     String id, FhirDateTime last) async {
-  String server = 'http://52.188.54.157:8080/fhir';
-  Map headers = {
+  var server = 'http://52.188.54.157:8080/fhir/';
+  var headers = {
     'Content-type': 'application/fhir+json',
     'Authorization': 'Basic Y2xpZW50OnNlY3JldA=='
   };
-  var response = await get('$server/Observation?date=>${last.toString()}',
-      headers: headers);
+  var response = await get('$server/Observation', headers: headers);
   List<Tuple2<double, FhirDateTime>> sats = [];
   List<Tuple2<double, FhirDateTime>> hr = [];
   if (response.statusCode == 200) {
@@ -41,10 +40,10 @@ Future<
       obsBundle.entry.forEach((entry) {
         var obs = Observation.fromJson(entry.resource.toJson());
         if (obs.code.coding[0].code.toString() == '2708-6') {
-          sats.add(Tuple2(double.parse(obs.valueQuantity.value.toString()),
+          sats.add(Tuple2(obs.valueQuantity.value.toJson() + 0.000001,
               obs.effectiveDateTime));
         } else if (obs.code.coding[0].code.toString() == '8867-4') {
-          hr.add(Tuple2(double.parse(obs.valueQuantity.value.toString()),
+          hr.add(Tuple2(obs.valueQuantity.value.toJson() + 0.000001,
               obs.effectiveDateTime));
         }
       });

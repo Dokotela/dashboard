@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'export.dart';
-import 'patient_information.dart';
+import 'package:fhir/fhir_r4.dart' as r4;
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -23,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future _randomTask() async {
     while (true) {
-      await Future.delayed(const Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 15));
       setState(() {
         patInfo.forEach((patient) => patient.getVitals());
         patients = <Widget>[];
@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    _randomTask();
+    // _randomTask();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -45,18 +45,28 @@ class _MyHomePageState extends State<MyHomePage> {
               if (patientController.text != null &&
                   patientController.text != '') {
                 var patient = await getPatient(patientController.text);
-                setState(() {
-                  if (patInfo.indexWhere((patientInfo) =>
-                          patientInfo.patient.id == patient.id) ==
-                      -1) {
-                    patInfo.add(PatientInformation(
-                        patient: patient,
-                        screenSize: MediaQuery.of(context).size.width));
-                  }
-                  patients = <Widget>[];
-                  patInfo
-                      .forEach((patient) => patients.add(patient.patientRow()));
-                });
+
+                if (patInfo.indexWhere((patientInfo) =>
+                        patientInfo.patient.id == patient.id) ==
+                    -1) {
+                  patInfo.add(
+                    PatientInformation(
+                      patient: patient,
+                      screenSize: MediaQuery.of(context).size.width,
+                    ),
+                  );
+                  await patInfo.last.getVitals(
+                      last: r4.FhirDateTime(
+                          DateTime.now().add(Duration(hours: -5))));
+                }
+
+                setState(
+                  () {
+                    patients = <Widget>[];
+                    patInfo.forEach(
+                        (patient) => patients.add(patient.patientRow()));
+                  },
+                );
                 patientController.text = '';
               }
             },

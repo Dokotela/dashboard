@@ -18,7 +18,10 @@ class PatientInformation {
     this.last,
     this.hr,
     this.sat,
-  });
+  }) {
+    sat = <Tuple2<double, FhirDateTime>>[];
+    hr = <Tuple2<double, FhirDateTime>>[];
+  }
 
   Row patientRow() => Row(
         children: [
@@ -29,15 +32,19 @@ class PatientInformation {
         ],
       );
 
-  void getVitals({FhirDateTime last}) async {
+  Future<void> getVitals({FhirDateTime last}) async {
     var now = FhirDateTime(DateTime.now());
     var result = await getPatientVitals(
       patient.id.toString(),
       last ?? this.last,
     );
     this.last = now;
-    result.value1.forEach((satValue) => sat.add(satValue));
-    result.value2.forEach((hrValue) => hr.add(hrValue));
+    if (result.value1 != null && result.value1.isNotEmpty) {
+      result.value1.forEach((satValue) => sat.add(satValue));
+    }
+    if (result.value2 != null && result.value2.isNotEmpty) {
+      result.value2.forEach((hrValue) => hr.add(hrValue));
+    }
   }
 
   Container getPatientName() {
@@ -112,6 +119,6 @@ class PatientInformation {
       );
 
   Container getTrend() {
-    return Container(child: ScatterChartSample1(screenSize));
+    return Container(child: ScatterChartSample1(screenSize, sat, hr));
   }
 }
