@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:fhir/fhir_r4.dart';
 import 'package:http/http.dart';
+
+import 'package:fhir/fhir_r4.dart';
 
 Future<Patient> getPatient(String name) async {
   var server = 'http://52.188.54.157:8080/fhir/';
