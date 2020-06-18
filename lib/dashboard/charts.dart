@@ -1,41 +1,37 @@
 import 'dart:math';
 
-import 'package:dartz/dartz.dart' as dartz;
-import 'package:fhir/fhir_r4.dart' as r4;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class ScatterChartSample1 extends StatefulWidget {
   final double screenSize;
-  final dartz.Tuple2<double, r4.FhirDateTime> sat;
-  final dartz.Tuple2<double, r4.FhirDateTime> hr;
 
-  ScatterChartSample1(this.screenSize, this.sat, this.hr);
+  ScatterChartSample1(this.screenSize);
   @override
-  State<StatefulWidget> createState() =>
-      _ScatterChartSample1State(screenSize, sat, hr);
+  State<StatefulWidget> createState() => _ScatterChartSample1State(screenSize);
 }
 
 class _ScatterChartSample1State extends State {
   double screenSize;
-  dartz.Tuple2<double, r4.FhirDateTime> sat;
-  dartz.Tuple2<double, r4.FhirDateTime> hr;
   double end = DateTime.now().add(Duration(hours: 1)).hour.toDouble();
   double start = DateTime.now().add(Duration(hours: -5)).hour.toDouble();
   final maxY = 150.0;
 
+  Color blue1 = const Color(0xFF0D47A1);
+  Color blue2 = const Color(0xFF42A5F5).withOpacity(0.8);
+
   bool showFlutter = true;
 
-  _ScatterChartSample1State(this.screenSize, this.sat, this.hr);
+  _ScatterChartSample1State(this.screenSize);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () {
-      //   setState(() {
-      //     showFlutter = !showFlutter;
-      //   });
-      // },
+      onTap: () {
+        setState(() {
+          showFlutter = !showFlutter;
+        });
+      },
       child: Container(
         width: screenSize * .5,
         height: 200,
@@ -46,7 +42,7 @@ class _ScatterChartSample1State extends State {
             elevation: 6,
             child: ScatterChart(
               ScatterChartData(
-                scatterSpots: classifyData(sat, hr),
+                scatterSpots: randomData(start),
                 minX: start,
                 maxX: end,
                 minY: 40,
@@ -82,12 +78,7 @@ class _ScatterChartSample1State extends State {
     );
   }
 
-  List<ScatterSpot> classifyData(
-    dartz.Tuple2<double, r4.FhirDateTime> sat,
-    dartz.Tuple2<double, r4.FhirDateTime> hr,
-  ) {
-    Color blue1 = const Color(0xFF0D47A1);
-    Color blue2 = const Color(0xFF42A5F5).withOpacity(0.8);
+  List<ScatterSpot> randomData(double start) {
     var hr = 90.0;
     var sat = 98.0;
     var curVal = hr;

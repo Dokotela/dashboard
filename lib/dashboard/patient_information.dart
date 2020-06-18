@@ -16,9 +16,18 @@ class PatientInformation {
     this.patient,
     this.screenSize,
     this.last,
-    this.sat,
     this.hr,
+    this.sat,
   });
+
+  Row patientRow() => Row(
+        children: [
+          getPatientName(),
+          getHeartRate(56),
+          getSaturation(96),
+          getTrend(),
+        ],
+      );
 
   void getVitals({FhirDateTime last}) async {
     var now = FhirDateTime(DateTime.now());
@@ -30,15 +39,6 @@ class PatientInformation {
     result.value1.forEach((satValue) => sat.add(satValue));
     result.value2.forEach((hrValue) => hr.add(hrValue));
   }
-
-  Row patientRow() => Row(
-        children: [
-          getPatientName(),
-          getHeartRate(56),
-          getSaturation(96),
-          getTrend(),
-        ],
-      );
 
   Container getPatientName() {
     var name = '${patient.name[0].family}, '
@@ -112,6 +112,6 @@ class PatientInformation {
       );
 
   Container getTrend() {
-    return Container(child: ScatterChartSample1(screenSize, sat, hr));
+    return Container(child: ScatterChartSample1(screenSize));
   }
 }
