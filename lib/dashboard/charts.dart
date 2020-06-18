@@ -110,8 +110,8 @@ class _ScatterChartSample1State extends State {
     DateTime now,
   ) {
     var blue = Colors.blue;
-    var yellow = Colors.yellow;
-    var red = Colors.red;
+    var yellow = Colors.yellow.shade700;
+    var red = Colors.red.shade800;
     var purple = Colors.purple;
 
     return List.generate(sat?.length ?? 0 + hr?.length ?? 0, (i) {
@@ -121,29 +121,28 @@ class _ScatterChartSample1State extends State {
       String dateTime;
       if (i < sat?.length ?? 0) {
         color =
-            sat[i].value1 < 92.0 ? yellow : sat[i].value1 < 85.0 ? red : blue;
+            sat[i].value1 < 85.0 ? red : sat[i].value1 < 92.0 ? yellow : blue;
         dateTime = sat[i].value2.toString();
 
         value = sat[i].value1;
       } else if ((i - sat?.length ?? 0) < (hr?.length ?? 0)) {
         var item = hr[i - sat?.length ?? 0];
-        color = (item.value1 < 60 || item.value1 > 100)
-            ? yellow
-            : (item.value1 < 50 || item.value1 > 120) ? red : purple;
+        color = (item.value1 < 50 || item.value1 > 120)
+            ? red
+            : (item.value1 < 60 || item.value1 > 100) ? yellow : purple;
         dateTime = item.value2.toString();
 
         value = item.value1;
       }
-      time = double.parse(dateTime.substring(11, 13)) +
-          double.parse(dateTime.substring(14, 16)) / 60 +
-          double.parse(dateTime.substring(17, 19)) / 3600 -
-          now.add(Duration(hours: -7)).hour;
+      var difference =
+          DateTime.parse(dateTime).difference(now.add(Duration(hours: -7)));
+      time = difference.inHours + 8.0;
 
       return ScatterSpot(
         (time),
         (value),
         color: color,
-        radius: 1,
+        radius: 2,
       );
     });
   }

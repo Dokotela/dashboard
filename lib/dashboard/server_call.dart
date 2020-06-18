@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 import 'package:fhir/fhir_r4.dart';
 
 Future<Patient> getPatient(String name) async {
-  var server = 'http://52.188.54.157:8080/fhir/';
+  var server = 'http://52.188.54.157:8080/o2hr/fhir/';
   var headers = {
     'Content-type': 'application/fhir+json',
     'Authorization': 'Basic Y2xpZW50OnNlY3JldA=='
@@ -26,7 +26,7 @@ Future<
     Tuple2<List<Tuple2<double, FhirDateTime>>,
         List<Tuple2<double, FhirDateTime>>>> getPatientVitals(
     String id, FhirDateTime last) async {
-  var server = 'http://52.188.54.157:8080/fhir/';
+  var server = 'http://52.188.54.157:8080/o2hr/fhir/';
   var headers = {
     'Content-type': 'application/fhir+json',
     'Authorization': 'Basic Y2xpZW50OnNlY3JldA=='

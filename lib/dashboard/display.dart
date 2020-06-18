@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // _randomTask();
+    _randomTask();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),

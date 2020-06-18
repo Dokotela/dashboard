@@ -121,7 +121,7 @@ class PatientInformation {
         sat.sort((a, b) => DateTime.parse(a.value2.toString())
             .compareTo(DateTime.parse(b.value2.toString())));
       }
-      latest = '${sat.last.value1.toString()}%';
+      latest = '${sat.last.value1.toInt().toString()}%';
     } else {
       latest = 'N/A';
     }
