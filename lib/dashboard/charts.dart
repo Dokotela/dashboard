@@ -18,8 +18,9 @@ class _ScatterChartSample1State extends State {
   double screenSize;
   List<dartz.Tuple2<double, r4.FhirDateTime>> sat;
   List<dartz.Tuple2<double, r4.FhirDateTime>> hr;
-  double end = DateTime.now().add(Duration(hours: 1)).hour.toDouble();
-  double start = DateTime.now().add(Duration(hours: -5)).hour.toDouble();
+  double start = 0.0;
+  double end = 8.0;
+
   final maxY = 150.0;
 
   bool showFlutter = true;
@@ -28,6 +29,7 @@ class _ScatterChartSample1State extends State {
 
   @override
   Widget build(BuildContext context) {
+    var now = DateTime.now();
     return GestureDetector(
       child: Container(
         width: screenSize * .5,
@@ -39,7 +41,7 @@ class _ScatterChartSample1State extends State {
             elevation: 6,
             child: ScatterChart(
               ScatterChartData(
-                scatterSpots: classifyData(sat, hr),
+                scatterSpots: classifyData(sat, hr, now),
                 minX: start,
                 maxX: end,
                 minY: 40,
@@ -63,6 +65,33 @@ class _ScatterChartSample1State extends State {
                       }
                     },
                   ),
+                  bottomTitles: SideTitles(
+                    showTitles: true,
+                    getTitles: (value) {
+                      switch (value.toInt()) {
+                        case 0:
+                          return now.add(Duration(hours: -7)).hour.toString();
+                        case 1:
+                          return now.add(Duration(hours: -6)).hour.toString();
+                        case 2:
+                          return now.add(Duration(hours: -5)).hour.toString();
+                        case 3:
+                          return now.add(Duration(hours: -4)).hour.toString();
+                        case 4:
+                          return now.add(Duration(hours: -3)).hour.toString();
+                        case 5:
+                          return now.add(Duration(hours: -2)).hour.toString();
+                        case 6:
+                          return now.add(Duration(hours: -1)).hour.toString();
+                        case 7:
+                          return now.hour.toString();
+                        case 8:
+                          return now.add(Duration(hours: 1)).hour.toString();
+                        default:
+                          return '';
+                      }
+                    },
+                  ),
                 ),
                 scatterTouchData: ScatterTouchData(
                   enabled: false,
@@ -78,6 +107,7 @@ class _ScatterChartSample1State extends State {
   List<ScatterSpot> classifyData(
     List<dartz.Tuple2<double, r4.FhirDateTime>> sat,
     List<dartz.Tuple2<double, r4.FhirDateTime>> hr,
+    DateTime now,
   ) {
     var blue = Colors.blue;
     var yellow = Colors.yellow;
@@ -106,7 +136,8 @@ class _ScatterChartSample1State extends State {
       }
       time = double.parse(dateTime.substring(11, 13)) +
           double.parse(dateTime.substring(14, 16)) / 60 +
-          double.parse(dateTime.substring(17, 19)) / 3600;
+          double.parse(dateTime.substring(17, 19)) / 3600 -
+          now.add(Duration(hours: -7)).hour;
 
       return ScatterSpot(
         (time),

@@ -26,8 +26,8 @@ class PatientInformation {
   Row patientRow() => Row(
         children: [
           getPatientName(),
-          getHeartRate(56),
-          getSaturation(96),
+          getHeartRate(),
+          getSaturation(),
           getTrend(),
         ],
       );
@@ -84,39 +84,65 @@ class PatientInformation {
     );
   }
 
-  Container getHeartRate(int hr) => Container(
-        width: screenSize * .15,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Most Recent Heart Rate:',
-              style: TextStyle(fontSize: screenSize * .012),
-            ),
-            Text(
-              '$hr',
-              style: TextStyle(fontSize: screenSize * .05),
-            ),
-          ],
-        ),
-      );
+  Container getHeartRate() {
+    var latest = '';
+    if (hr.isNotEmpty) {
+      if (hr.length > 1) {
+        hr.sort((a, b) => DateTime.parse(a.value2.toString())
+            .compareTo(DateTime.parse(b.value2.toString())));
+      }
+      latest = hr.last.value1.toString();
+    } else {
+      latest = 'N/A';
+    }
 
-  Container getSaturation(int sat) => Container(
-        width: screenSize * .15,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Most Recent O2Sat:',
-              style: TextStyle(fontSize: screenSize * .012),
-            ),
-            Text(
-              '$sat%',
-              style: TextStyle(fontSize: screenSize * .05),
-            ),
-          ],
-        ),
-      );
+    return Container(
+      width: screenSize * .15,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'Most Recent Heart Rate:',
+            style: TextStyle(fontSize: screenSize * .012),
+          ),
+          Text(
+            '$latest',
+            style: TextStyle(fontSize: screenSize * .05),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container getSaturation() {
+    var latest = '';
+    if (sat.isNotEmpty) {
+      if (sat.length > 1) {
+        sat.sort((a, b) => DateTime.parse(a.value2.toString())
+            .compareTo(DateTime.parse(b.value2.toString())));
+      }
+      latest = '${sat.last.value1.toString()}%';
+    } else {
+      latest = 'N/A';
+    }
+
+    return Container(
+      width: screenSize * .15,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'Most Recent O2Sat:',
+            style: TextStyle(fontSize: screenSize * .012),
+          ),
+          Text(
+            '$latest',
+            style: TextStyle(fontSize: screenSize * .05),
+          ),
+        ],
+      ),
+    );
+  }
 
   Container getTrend() {
     return Container(child: ScatterChartSample1(screenSize, sat, hr));
