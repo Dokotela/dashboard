@@ -31,7 +31,8 @@ Future<
     'Content-type': 'application/fhir+json',
     'Authorization': 'Basic Y2xpZW50OnNlY3JldA=='
   };
-  var response = await get('$server/Observation', headers: headers);
+
+  var response = await get('$server/Observation?_count=1000', headers: headers);
   List<Tuple2<double, FhirDateTime>> sats = [];
   List<Tuple2<double, FhirDateTime>> hr = [];
   if (response.statusCode == 200) {

@@ -40,7 +40,12 @@ class PatientInformation {
     );
     this.last = now;
     if (result.value1 != null && result.value1.isNotEmpty) {
-      result.value1.forEach((satValue) => sat.add(satValue));
+      result.value1.forEach((satValue) {
+        if (sat.indexWhere((element) => element.value2 == satValue.value2) ==
+            -1) {
+          sat.add(satValue);
+        }
+      });
     }
     if (result.value2 != null && result.value2.isNotEmpty) {
       result.value2.forEach((hrValue) => hr.add(hrValue));

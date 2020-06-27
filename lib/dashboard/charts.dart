@@ -134,9 +134,11 @@ class _ScatterChartSample1State extends State {
 
         value = item.value1;
       }
-      var difference =
-          DateTime.parse(dateTime).difference(now.add(Duration(hours: -7)));
-      time = difference.inHours + 8.0;
+      // var difference =
+      //     DateTime.parse(dateTime).difference(now.add(Duration(hours: -12)));
+      time = DateTime.parse(dateTime).hour.toDouble() +
+          DateTime.parse(dateTime).minute.toDouble() / 60;
+      print('$i:$time');
 
       return ScatterSpot(
         (time),
