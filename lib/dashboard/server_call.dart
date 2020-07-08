@@ -6,12 +6,11 @@ import 'package:http/http.dart';
 import 'package:fhir/fhir_r4.dart';
 
 Future<Patient> getPatient(String name) async {
-  var server = 'http://52.188.54.157:8080/o2hr/fhir/';
+  var server = 'http://localhost:8080/hapi-fhir-jpaserver/fhir/';
   var headers = {
     'Content-type': 'application/fhir+json',
-    'Authorization': 'Basic Y2xpZW50OnNlY3JldA=='
   };
-  var response = await get('$server/Patient?family=$name', headers: headers);
+  var response = await get('$server/Patient', headers: headers);
   var patient;
   if (response.statusCode == 200) {
     var patBundle = Bundle.fromJson(json.decode(response.body));
@@ -26,10 +25,9 @@ Future<
     Tuple2<List<Tuple2<double, FhirDateTime>>,
         List<Tuple2<double, FhirDateTime>>>> getPatientVitals(
     String id, FhirDateTime last) async {
-  var server = 'http://52.188.54.157:8080/o2hr/fhir/';
+  var server = 'http://localhost:8080/hapi-fhir-jpaserver/fhir/';
   var headers = {
     'Content-type': 'application/fhir+json',
-    'Authorization': 'Basic Y2xpZW50OnNlY3JldA=='
   };
 
   var response = await get('$server/Observation?_count=1000', headers: headers);
@@ -50,5 +48,6 @@ Future<
       });
     }
   }
+  print(sats);
   return Tuple2(sats, hr);
 }

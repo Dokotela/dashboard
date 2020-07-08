@@ -19,7 +19,7 @@ class _ScatterChartSample1State extends State {
   List<dartz.Tuple2<double, r4.FhirDateTime>> sat;
   List<dartz.Tuple2<double, r4.FhirDateTime>> hr;
   double start = 0.0;
-  double end = 8.0;
+  double end = 4.0;
 
   final maxY = 150.0;
 
@@ -32,8 +32,8 @@ class _ScatterChartSample1State extends State {
     var now = DateTime.now();
     return GestureDetector(
       child: Container(
-        width: screenSize * .5,
-        height: 200,
+        width: screenSize * .4,
+        height: 180,
         child: AspectRatio(
           aspectRatio: 1,
           child: Card(
@@ -70,23 +70,30 @@ class _ScatterChartSample1State extends State {
                     getTitles: (value) {
                       switch (value.toInt()) {
                         case 0:
-                          return now.add(Duration(hours: -7)).hour.toString();
+                          return now
+                              .add(Duration(minutes: -60))
+                              .toIso8601String()
+                              .substring(11, 16);
                         case 1:
-                          return now.add(Duration(hours: -6)).hour.toString();
+                          return now
+                              .add(Duration(minutes: -45))
+                              .toIso8601String()
+                              .substring(11, 16);
                         case 2:
-                          return now.add(Duration(hours: -5)).hour.toString();
+                          return now
+                              .add(Duration(minutes: -30))
+                              .toIso8601String()
+                              .substring(11, 16);
                         case 3:
-                          return now.add(Duration(hours: -4)).hour.toString();
+                          return now
+                              .add(Duration(minutes: -15))
+                              .toIso8601String()
+                              .substring(11, 16);
                         case 4:
-                          return now.add(Duration(hours: -3)).hour.toString();
-                        case 5:
-                          return now.add(Duration(hours: -2)).hour.toString();
-                        case 6:
-                          return now.add(Duration(hours: -1)).hour.toString();
-                        case 7:
-                          return now.hour.toString();
-                        case 8:
-                          return now.add(Duration(hours: 1)).hour.toString();
+                          return now
+                              .add(Duration(minutes: 0))
+                              .toIso8601String()
+                              .substring(11, 16);
                         default:
                           return '';
                       }
@@ -136,8 +143,7 @@ class _ScatterChartSample1State extends State {
       }
       // var difference =
       //     DateTime.parse(dateTime).difference(now.add(Duration(hours: -12)));
-      time = DateTime.parse(dateTime).hour.toDouble() +
-          DateTime.parse(dateTime).minute.toDouble() / 60;
+      time = DateTime.parse(dateTime).minute.toDouble() / 60;
       print('$i:$time');
 
       return ScatterSpot(
