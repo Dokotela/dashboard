@@ -58,8 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   );
                   await patInfo.last.getVitals(
-                      last:
-                          r4.DateTime(DateTime.now().add(Duration(hours: -5))));
+                      last: r4.FhirDateTime(
+                          DateTime.now().add(Duration(hours: -5))));
                 }
 
                 setState(

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 class ScatterChartSample1 extends StatefulWidget {
   final double screenSize;
-  final List<dartz.Tuple2<double, r4.DateTime>> sat;
-  final List<dartz.Tuple2<double, r4.DateTime>> hr;
+  final List<dartz.Tuple2<double, r4.FhirDateTime>> sat;
+  final List<dartz.Tuple2<double, r4.FhirDateTime>> hr;
 
   ScatterChartSample1(this.screenSize, this.sat, this.hr);
   @override
@@ -16,8 +16,8 @@ class ScatterChartSample1 extends StatefulWidget {
 
 class _ScatterChartSample1State extends State {
   double screenSize;
-  List<dartz.Tuple2<double, r4.DateTime>> sat;
-  List<dartz.Tuple2<double, r4.DateTime>> hr;
+  List<dartz.Tuple2<double, r4.FhirDateTime>> sat;
+  List<dartz.Tuple2<double, r4.FhirDateTime>> hr;
   double start = 0.0;
   double end = 4.0;
 
@@ -112,8 +112,8 @@ class _ScatterChartSample1State extends State {
   }
 
   List<ScatterSpot> classifyData(
-    List<dartz.Tuple2<double, r4.DateTime>> sat,
-    List<dartz.Tuple2<double, r4.DateTime>> hr,
+    List<dartz.Tuple2<double, r4.FhirDateTime>> sat,
+    List<dartz.Tuple2<double, r4.FhirDateTime>> hr,
     DateTime now,
   ) {
     var blue = Colors.blue;

@@ -8,9 +8,9 @@ import 'export.dart';
 class PatientInformation {
   Patient patient;
   double screenSize;
-  DateTime last;
-  List<Tuple2<double, DateTime>> sat;
-  List<Tuple2<double, DateTime>> hr;
+  FhirDateTime last;
+  List<Tuple2<double, FhirDateTime>> sat;
+  List<Tuple2<double, FhirDateTime>> hr;
 
   PatientInformation({
     this.patient,
@@ -19,8 +19,8 @@ class PatientInformation {
     this.hr,
     this.sat,
   }) {
-    sat = <Tuple2<double, DateTime>>[];
-    hr = <Tuple2<double, DateTime>>[];
+    sat = <Tuple2<double, FhirDateTime>>[];
+    hr = <Tuple2<double, FhirDateTime>>[];
   }
 
   Row patientRow() => Row(
@@ -32,8 +32,8 @@ class PatientInformation {
         ],
       );
 
-  Future<void> getVitals({DateTime last}) async {
-    var now = DateTime(DateTime.now());
+  Future<void> getVitals({FhirDateTime last}) async {
+    var now = FhirDateTime(DateTime.now());
     var result = await getPatientVitals(
       patient.id.toString(),
       last ?? this.last,

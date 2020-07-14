@@ -20,16 +20,18 @@ Future<Patient> getPatient(String name) async {
   return patient;
 }
 
-Future<Tuple2<List<Tuple2<double, DateTime>>, List<Tuple2<double, DateTime>>>>
-    getPatientVitals(String id, DateTime last) async {
+Future<
+    Tuple2<List<Tuple2<double, FhirDateTime>>,
+        List<Tuple2<double, FhirDateTime>>>> getPatientVitals(
+    String id, FhirDateTime last) async {
   var server = 'http://localhost:8080/hapi-fhir-jpaserver/fhir/';
   var headers = {
     'Content-type': 'application/fhir+json',
   };
 
   var response = await get('$server/Observation?_count=1000', headers: headers);
-  List<Tuple2<double, DateTime>> sats = [];
-  List<Tuple2<double, DateTime>> hr = [];
+  List<Tuple2<double, FhirDateTime>> sats = [];
+  List<Tuple2<double, FhirDateTime>> hr = [];
   if (response.statusCode == 200) {
     var obsBundle = Bundle.fromJson(json.decode(response.body));
     if (int.parse(obsBundle.total.toString()) > 0) {
