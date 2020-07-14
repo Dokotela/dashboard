@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'export.dart';
@@ -29,6 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
         patients = <Widget>[];
         patInfo.forEach((patient) => patients.add(patient.patientRow()));
       });
+      await Future.delayed(const Duration(seconds: 15));
     }
   }
 
@@ -45,7 +48,6 @@ class _MyHomePageState extends State<MyHomePage> {
               if (patientController.text != null &&
                   patientController.text != '') {
                 var patient = await getPatient(patientController.text);
-
                 if (patInfo.indexWhere((patientInfo) =>
                         patientInfo.patient.id == patient.id) ==
                     -1) {
@@ -56,8 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   );
                   await patInfo.last.getVitals(
-                      last: r4.FhirDateTime(
-                          DateTime.now().add(Duration(hours: -5))));
+                      last:
+                          r4.DateTime(DateTime.now().add(Duration(hours: -5))));
                 }
 
                 setState(
