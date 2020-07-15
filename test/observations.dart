@@ -3,15 +3,11 @@ import 'dart:math';
 
 import 'package:fhir/fhir_r4.dart' as r4;
 import 'package:http/http.dart';
+import 'package:string_validator/string_validator.dart';
 
 void main() async {
   for (var i = 0; i < 100; i++) {
-    var now = DateTime.now();
-    print(hasMatch(r'([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)$',
-        '2020-07-14 19:14:22.597149'));
-    print(r4.FhirDateTime(DateTime(now.year, now.month, now.day, now.hour,
-        now.minute, now.second, now.millisecond, now.microsecond)));
-    print('here3');
+    print(r4.FhirDateTime(DateTime.parse('2020-07-14 20:52:22.463058')));
     var bundle = r4.Bundle(
       resourceType: 'r4.Bundle',
       type: r4.BundleType.transaction,
@@ -58,7 +54,6 @@ void main() async {
         ),
       ],
     );
-    print('here');
     print(jsonEncode(bundle.toJson()));
     var headers = {'content-type': 'application/fhir+json'};
     var response = await post('http://localhost:8080/hapi-fhir-jpaserver/fhir/',
