@@ -2,18 +2,6 @@
   "configVersion": 2,
   "packages": [
     {
-      "name": "archive",
-      "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/archive-2.0.13",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
-      "name": "args",
-      "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/args-1.6.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.3"
-    },
-    {
       "name": "async",
       "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/async-2.4.1",
       "packageUri": "lib/",
@@ -32,22 +20,16 @@
       "languageVersion": "2.0"
     },
     {
-      "name": "collection",
-      "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/collection-1.14.12",
+      "name": "clock",
+      "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/clock-1.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
     {
-      "name": "convert",
-      "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/convert-2.1.1",
+      "name": "collection",
+      "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/collection-1.14.12",
       "packageUri": "lib/",
-      "languageVersion": "1.17"
-    },
-    {
-      "name": "crypto",
-      "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/crypto-2.1.4",
-      "packageUri": "lib/",
-      "languageVersion": "2.1"
+      "languageVersion": "2.0"
     },
     {
       "name": "cupertino_icons",
@@ -66,6 +48,12 @@
       "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/equatable-1.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "fake_async",
+      "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/fake_async-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.2"
     },
     {
       "name": "fhir",
@@ -110,12 +98,6 @@
       "languageVersion": "2.3"
     },
     {
-      "name": "image",
-      "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/image-2.1.12",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
       "name": "json_annotation",
       "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/json_annotation-3.0.1",
       "packageUri": "lib/",
@@ -135,7 +117,7 @@
     },
     {
       "name": "path",
-      "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/path-1.6.4",
+      "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/path-1.7.0",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -156,18 +138,6 @@
       "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/pedantic-1.9.0",
       "packageUri": "lib/",
       "languageVersion": "2.1"
-    },
-    {
-      "name": "petitparser",
-      "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/petitparser-2.4.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.4"
-    },
-    {
-      "name": "quiver",
-      "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/quiver-2.1.3",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
     },
     {
       "name": "sky_engine",
@@ -213,9 +183,9 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/test_api-0.2.15",
+      "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/test_api-0.2.16",
       "packageUri": "lib/",
-      "languageVersion": "2.4"
+      "languageVersion": "2.7"
     },
     {
       "name": "typed_data",
@@ -230,19 +200,13 @@
       "languageVersion": "2.0"
     },
     {
-      "name": "xml",
-      "rootUri": "file:///home/grey/.pub-cache/hosted/pub.dartlang.org/xml-3.6.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.6"
-    },
-    {
       "name": "dashboard",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2020-07-08T01:31:18.828583Z",
+  "generated": "2020-07-15T04:18:29.490093Z",
   "generator": "pub",
-  "generatorVersion": "2.8.4"
+  "generatorVersion": "2.9.0-14.1.beta"
 }
