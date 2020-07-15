@@ -8,14 +8,12 @@ import 'export.dart';
 class PatientInformation {
   Patient patient;
   double screenSize;
-  FhirDateTime last;
   List<Tuple2<double, FhirDateTime>> sat;
   List<Tuple2<double, FhirDateTime>> hr;
 
   PatientInformation({
     this.patient,
     this.screenSize,
-    this.last,
     this.hr,
     this.sat,
   }) {
@@ -33,23 +31,16 @@ class PatientInformation {
       );
 
   Future<void> getVitals({FhirDateTime last}) async {
-    var now = FhirDateTime(DateTime.now());
-    var result = await getPatientVitals(
-      patient.id.toString(),
-      last ?? this.last,
-    );
-    this.last = now;
+    var result = await getPatientVitals(patient.id.toString());
     if (result.value1 != null && result.value1.isNotEmpty) {
-      result.value1.forEach((satValue) {
-        if (sat.indexWhere((element) => element.value2 == satValue.value2) ==
-            -1) {
-          sat.add(satValue);
-        }
-      });
+      sat = <Tuple2<double, FhirDateTime>>[];
+      result.value1.forEach((satValue) => sat.add(satValue));
     }
     if (result.value2 != null && result.value2.isNotEmpty) {
-      result.value2.forEach((hrValue) => hr.add(hrValue));
+      hr = <Tuple2<double, FhirDateTime>>[];
+      result.value2.forEach((timeValue) => hr.add(timeValue));
     }
+    print('PatientSats: ${sat.length}');
   }
 
   Container getPatientName() {

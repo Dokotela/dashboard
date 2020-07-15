@@ -19,7 +19,7 @@ class _ScatterChartSample1State extends State {
   List<dartz.Tuple2<double, r4.FhirDateTime>> sat;
   List<dartz.Tuple2<double, r4.FhirDateTime>> hr;
   double start = 0.0;
-  double end = 4.0;
+  double end = 5.0;
 
   final maxY = 150.0;
 
@@ -30,6 +30,7 @@ class _ScatterChartSample1State extends State {
   @override
   Widget build(BuildContext context) {
     var now = DateTime.now();
+    print('ChartsLength: ${sat.length}');
     return GestureDetector(
       child: Container(
         width: screenSize * .4,
@@ -69,27 +70,32 @@ class _ScatterChartSample1State extends State {
                     showTitles: true,
                     getTitles: (value) {
                       switch (value.toInt()) {
-                        case 0:
+                        case 5:
                           return now
-                              .add(Duration(minutes: -60))
+                              .add(Duration(minutes: -5))
                               .toIso8601String()
                               .substring(11, 16);
-                        case 1:
+                        case 4:
                           return now
-                              .add(Duration(minutes: -45))
-                              .toIso8601String()
-                              .substring(11, 16);
-                        case 2:
-                          return now
-                              .add(Duration(minutes: -30))
+                              .add(Duration(minutes: -4))
                               .toIso8601String()
                               .substring(11, 16);
                         case 3:
                           return now
-                              .add(Duration(minutes: -15))
+                              .add(Duration(minutes: -3))
                               .toIso8601String()
                               .substring(11, 16);
-                        case 4:
+                        case 2:
+                          return now
+                              .add(Duration(minutes: -2))
+                              .toIso8601String()
+                              .substring(11, 16);
+                        case 1:
+                          return now
+                              .add(Duration(minutes: -1))
+                              .toIso8601String()
+                              .substring(11, 16);
+                        case 0:
                           return now
                               .add(Duration(minutes: 0))
                               .toIso8601String()
@@ -123,7 +129,7 @@ class _ScatterChartSample1State extends State {
 
     return List.generate(sat?.length ?? 0 + hr?.length ?? 0, (i) {
       Color color;
-      double time;
+      double minSec;
       double value;
       String dateTime;
       if (i < sat?.length ?? 0) {
@@ -141,10 +147,13 @@ class _ScatterChartSample1State extends State {
 
         value = item.value1;
       }
-      time = DateTime.parse(dateTime).minute.toDouble() / 60;
+      minSec =
+          now.difference(DateTime.parse(dateTime)).inSeconds.toDouble() / 60;
+      // print(minSec);
+      // print(sat.length);
 
       return ScatterSpot(
-        (time),
+        (minSec),
         (value),
         color: color,
         radius: 2,

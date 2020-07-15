@@ -25,19 +25,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future _randomTask() async {
     while (true) {
-      await Future.delayed(const Duration(seconds: 15));
-      setState(() {
-        patInfo.forEach((patient) => patient.getVitals());
-        patients = <Widget>[];
-        patInfo.forEach((patient) => patients.add(patient.patientRow()));
-      });
-      await Future.delayed(const Duration(seconds: 15));
+      await new Future.delayed(const Duration(seconds: 15));
+      patInfo.forEach((patient) async => await patient.getVitals());
+      await stateSetter();
     }
+  }
+
+  Future stateSetter() async {
+    setState(() {
+      patients = <Widget>[];
+      patInfo.forEach((patient) => patients.add(patient.patientRow()));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    _randomTask();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -59,18 +61,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                   await patInfo.last.getVitals(
                       last: r4.FhirDateTime(
-                          DateTime.now().add(Duration(hours: -5))));
+                          DateTime.now().add(Duration(minutes: -5))));
                 }
 
                 setState(
                   () {
                     patients = <Widget>[];
-                    patInfo.forEach(
-                        (patient) => patients.add(patient.patientRow()));
+                    patInfo.forEach((patient) async =>
+                        patients.add(await patient.patientRow()));
                   },
                 );
                 patientController.text = '';
               }
+              _randomTask();
             },
           ),
           Container(

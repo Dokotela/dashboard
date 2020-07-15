@@ -6,14 +6,8 @@ import 'package:http/http.dart';
 
 void main() async {
   for (var i = 0; i < 100; i++) {
-    var now = DateTime.now();
-    print(hasMatch(r'([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)$',
-        '2020-07-14 19:14:22.597149'));
-    print(r4.FhirDateTime(DateTime(now.year, now.month, now.day, now.hour,
-        now.minute, now.second, now.millisecond, now.microsecond)));
-    print('here3');
     var bundle = r4.Bundle(
-      resourceType: 'r4.Bundle',
+      resourceType: 'Bundle',
       type: r4.BundleType.transaction,
       entry: [
         r4.BundleEntry(
@@ -42,7 +36,7 @@ void main() async {
                 ),
               ],
             ),
-            subject: r4.Reference(reference: 'Patient/202'),
+            subject: r4.Reference(reference: 'Patient/345'),
             effectiveDateTime: r4.FhirDateTime(DateTime.now()),
             valueQuantity: r4.Quantity(
               value: r4.Decimal(Random().nextInt(30) + 70.0),
@@ -53,19 +47,16 @@ void main() async {
           ),
           request: r4.BundleRequest(
             method: r4.BundleRequestMethod.post,
-            url: r4.FhirUri('r4.Observation'),
+            url: r4.FhirUri('Observation'),
           ),
         ),
       ],
     );
-    print('here');
-    print(jsonEncode(bundle.toJson()));
     var headers = {'content-type': 'application/fhir+json'};
     var response = await post('http://localhost:8080/hapi-fhir-jpaserver/fhir/',
         headers: headers, body: jsonEncode(bundle.toJson()));
     print(response.statusCode);
+    print(response.body);
     await Future.delayed(Duration(seconds: 5));
   }
 }
-
-bool hasMatch(String pattern, String input) => RegExp(pattern).hasMatch(input);
