@@ -57,6 +57,6 @@ void main() async {
         headers: headers, body: jsonEncode(bundle.toJson()));
     print(response.statusCode);
     print(response.body);
-    await Future.delayed(Duration(seconds: 15));
+    await Future.delayed(Duration(seconds: 10));
   }
 }

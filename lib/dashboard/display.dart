@@ -23,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future _randomTask() async {
     while (true) {
-      await new Future.delayed(const Duration(seconds: 15));
+      await new Future.delayed(const Duration(seconds: 5));
       for (var patient in patInfo) {
         await patient.getVitals();
       }
