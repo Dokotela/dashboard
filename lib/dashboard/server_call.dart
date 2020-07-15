@@ -35,12 +35,10 @@ Future<
   if (response.statusCode == 200) {
     var obsBundle = Bundle.fromJson(json.decode(response.body));
     if (int.parse(obsBundle.total.toString()) > 0) {
-      print('BundleTotal: ${obsBundle.total}');
       obsBundle.entry.forEach(
         (entry) {
           var obs = Observation.fromJson(entry.resource.toJson());
           if (DateTime.tryParse(obs.effectiveDateTime.toString()) != null) {
-            print(DateTime.parse(obs.effectiveDateTime.toString()).hour);
             if (DateTime.now()
                     .difference(
                         DateTime.parse(obs.effectiveDateTime.toString()))
@@ -59,6 +57,6 @@ Future<
       );
     }
   }
-  print('SatsLength: ${sats.length}');
+  print('\nServer: ${sats.last.value2}');
   return Tuple2(sats, hr);
 }

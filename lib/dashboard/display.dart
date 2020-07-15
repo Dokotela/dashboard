@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import 'export.dart';
@@ -26,16 +24,15 @@ class _MyHomePageState extends State<MyHomePage> {
   Future _randomTask() async {
     while (true) {
       await new Future.delayed(const Duration(seconds: 15));
-      patInfo.forEach((patient) async => await patient.getVitals());
-      await stateSetter();
-    }
-  }
+      for (var patient in patInfo) {
+        await patient.getVitals();
+      }
 
-  Future stateSetter() async {
-    setState(() {
-      patients = <Widget>[];
-      patInfo.forEach((patient) => patients.add(patient.patientRow()));
-    });
+      setState(() {
+        patients = <Widget>[];
+        patInfo.forEach((patient) => patients.add(patient.patientRow()));
+      });
+    }
   }
 
   @override
@@ -67,8 +64,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 setState(
                   () {
                     patients = <Widget>[];
-                    patInfo.forEach((patient) async =>
-                        patients.add(await patient.patientRow()));
+                    patInfo.forEach(
+                        (patient) => patients.add(patient.patientRow()));
                   },
                 );
                 patientController.text = '';

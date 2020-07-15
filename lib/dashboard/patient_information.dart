@@ -9,22 +9,18 @@ class PatientInformation {
   Patient patient;
   double screenSize;
   List<Tuple2<double, FhirDateTime>> sat;
-  List<Tuple2<double, FhirDateTime>> hr;
 
   PatientInformation({
     this.patient,
     this.screenSize,
-    this.hr,
     this.sat,
   }) {
     sat = <Tuple2<double, FhirDateTime>>[];
-    hr = <Tuple2<double, FhirDateTime>>[];
   }
 
   Row patientRow() => Row(
         children: [
           getPatientName(),
-          getHeartRate(),
           getSaturation(),
           getTrend(),
         ],
@@ -36,11 +32,7 @@ class PatientInformation {
       sat = <Tuple2<double, FhirDateTime>>[];
       result.value1.forEach((satValue) => sat.add(satValue));
     }
-    if (result.value2 != null && result.value2.isNotEmpty) {
-      hr = <Tuple2<double, FhirDateTime>>[];
-      result.value2.forEach((timeValue) => hr.add(timeValue));
-    }
-    print('PatientSats: ${sat.length}');
+    print('GetVitals: ${sat.last.value2}');
   }
 
   Container getPatientName() {
@@ -80,36 +72,6 @@ class PatientInformation {
     );
   }
 
-  Container getHeartRate() {
-    var latest = '';
-    if (hr.isNotEmpty) {
-      if (hr.length > 1) {
-        hr.sort((a, b) => DateTime.parse(a.value2.toString())
-            .compareTo(DateTime.parse(b.value2.toString())));
-      }
-      latest = hr.last.value1.toString();
-    } else {
-      latest = 'N/A';
-    }
-
-    return Container(
-      width: screenSize * .15,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Most Recent Heart Rate:',
-            style: TextStyle(fontSize: screenSize * .012),
-          ),
-          Text(
-            '$latest',
-            style: TextStyle(fontSize: screenSize * .05),
-          ),
-        ],
-      ),
-    );
-  }
-
   Container getSaturation() {
     var latest = '';
     if (sat.isNotEmpty) {
@@ -121,6 +83,8 @@ class PatientInformation {
     } else {
       latest = 'N/A';
     }
+
+    print('GetSats: ${sat.last.value2}');
 
     return Container(
       width: screenSize * .15,
@@ -141,6 +105,7 @@ class PatientInformation {
   }
 
   Container getTrend() {
-    return Container(child: ScatterChartSample1(screenSize, sat, hr));
+    print('GetTrend: ${sat.last.value2}');
+    return Container(child: scatterChart(screenSize, sat));
   }
 }
